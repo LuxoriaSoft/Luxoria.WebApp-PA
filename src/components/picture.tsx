@@ -11,8 +11,9 @@ export default function CardComponent({ _id, name }) {
         <Image
           src={`/api/preview?_id=${_id}`}
           alt={name}
-          objectFit="cover"
+          objectFit="contain"
           layout="fill"
+          className={"m-1"}
         />
       </div>
       <div className="px-4 py-4 sm:px-6">
