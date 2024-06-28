@@ -3,7 +3,7 @@ import CardComponent from "@/components/picture";
 
 
 async function fetchInventory() {
-  const res = await fetch('http://localhost:3000/api/inventory');
+  const res = await fetch('http://localhost:3000/api/inventory', { cache: 'no-store' });
   if (!res.ok) {
     throw new Error('Failed to fetch inventory data');
   }
