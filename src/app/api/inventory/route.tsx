@@ -10,16 +10,15 @@ export const getFilesList = async () => {
 
         const bucket = new GridFSBucket(db);
         const files = await bucket.find().toArray();
+        const fileDetails = files.map(file => ({ _id: file._id, filename: file.filename }));
 
-        // Récupérer uniquement les noms des fichiers
-        const fileNames = files.map(file => file.filename);
-
-        return fileNames;
+        return fileDetails;
     } catch (error) {
         console.error("Erreur lors de la récupération de la liste des fichiers :", error);
         throw error;
     }
 };
+
 const initializeMongoClient = async () => {
     if (!clientPromise) {
         const uri = "mongodb+srv://Luxor:LuxorIA@luxoria.l9osito.mongodb.net/?appName=LuxorIA";
