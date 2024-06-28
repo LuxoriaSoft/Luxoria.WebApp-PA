@@ -7,14 +7,10 @@ export default function CardComponent({ _id, name }) {
         {name}
       </div>
       <div className="relative h-96">
-        {/*
-          - Hauteur fixe pour afficher l'image en entier
-          - Ajustez la hauteur (h-96) en fonction de la taille maximale souhaitée pour l'image
-        */}
         <Image
           src={`/api/preview?_id=${_id}`}
           alt={name}
-          objectFit="contain"
+          objectFit={"contain"}
           layout={"fill"}
         />
       </div>
@@ -23,7 +19,7 @@ export default function CardComponent({ _id, name }) {
           type="button"
           className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
-          Télécharger
+          Download
         </button>
       </div>
     </div>
