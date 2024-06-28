@@ -28,13 +28,11 @@ export default async function Home() {
       <div className="mt-4">
         <h1 className="text-2xl font-bold mb-4">Inventory</h1>
         {Array.isArray(inventory?.files) && inventory?.files.length > 0 ? (
-          <ul>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {inventory?.files.map((item : any) => (
-              <li key={item._id}>
-                <CardComponent _id={item._id} name={item.filename}/>
-              </li>
+              <CardComponent key={item._id} _id={item._id} name={item.filename}/>
             ))}
-          </ul>
+          </div>
         ) : (
           <p>No inventory available.</p>
         )}
