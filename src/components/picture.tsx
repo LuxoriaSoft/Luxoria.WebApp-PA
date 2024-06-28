@@ -5,6 +5,7 @@ import Image from 'next/image';
 import DeleteButton from '@/components/deleteButton';
 import DownloadButton from '@/components/downloadButton';
 import Modal from 'react-modal';
+import ShareButton from "@/components/shareButton";
 
 export default function CardComponent({ _id, name }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -34,6 +35,7 @@ export default function CardComponent({ _id, name }) {
             <div className="px-4 py-4 sm:px-6 flex items-center justify-center gap-x-2">
                 <DownloadButton _id={_id} />
                 <DeleteButton _id={_id} />
+                <ShareButton _id={_id} />
             </div>
 
             <Modal
@@ -80,11 +82,6 @@ export default function CardComponent({ _id, name }) {
                             objectFit="contain"
                             layout="fill"
                         />
-                    </div>
-                    <div className={"px-4 py-4 sm:px-6 flex items-center justify-center gap-x-2"}>
-                      <DownloadButton _id={_id} />
-                      <DeleteButton _id={_id} />
-                      <ShareButton _id={_id} />
                     </div>
                 </div>
             </Modal>
