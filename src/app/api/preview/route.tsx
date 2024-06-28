@@ -24,7 +24,6 @@ export async function GET(request: NextRequest) {
         const client = await initializeMongoClient();
         db = client.db('LuxorAI');
 
-        // Log the request URL for debugging
         console.log("Request URL:", request.url);
         console.log("Query parameters:", request.nextUrl.searchParams);
 
@@ -47,7 +46,6 @@ export async function GET(request: NextRequest) {
 
         let filenameFromDB: string | undefined;
 
-        // Retrieve the filename from the database
         try {
             const fileInfo = await bucket.find({ _id: objectId }).toArray();
             if (fileInfo.length > 0) {

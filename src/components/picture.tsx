@@ -1,7 +1,8 @@
 import Image from "next/image";
+import DeleteButton from "@/components/deleteButton";
+import DownloadButton from "@/components/downloadButton";
 
 export default function CardComponent({ _id, name }) {
-
   return (
     <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow">
       <div className="px-4 py-5 sm:px-6">
@@ -13,17 +14,14 @@ export default function CardComponent({ _id, name }) {
           alt={name}
           objectFit="contain"
           layout="fill"
-          className={"m-1"}
         />
       </div>
-      <div className="px-4 py-4 sm:px-6">
-        <a
-          className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          href={`/api/download?_id=${_id}`}
-        >
-          Download
-        </a>
+
+      <div className={"px-4 py-4 sm:px-6 flex items-center justify-center gap-x-2"}>
+        <DownloadButton _id={_id} />
+        <DeleteButton _id={_id} />
       </div>
+
     </div>
   );
 }

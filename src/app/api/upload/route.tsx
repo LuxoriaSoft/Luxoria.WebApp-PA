@@ -1,11 +1,9 @@
-// Import des modules nécessaires
 import { NextRequest, NextResponse } from "next/server";
 import { MongoClient, GridFSBucket, Db } from 'mongodb';
 
 let db: Db;
 let clientPromise: Promise<MongoClient>;
 
-// Fonction pour initialiser la connexion à MongoDB une fois
 const initializeMongoClient = async () => {
     if (!clientPromise) {
         const uri = "mongodb+srv://Luxor:LuxorIA@luxoria.l9osito.mongodb.net/?appName=LuxorIA";
@@ -24,23 +22,19 @@ const initializeMongoClient = async () => {
 // Fonction pour gérer les requêtes POST
 export async function POST(request: NextRequest) {
     try {
-        // Connexion à MongoDB avant de traiter la requête
         const client = await initializeMongoClient();
         db = client.db('LuxorAI');
 
         const data = await request.formData();
         const file = data.get("file");
 
-        // Vérifiez si le fichier est bien du type File
         if (!file || !(file instanceof File)) {
             return NextResponse.json({ error: "Aucun fichier uploadé ou format invalide" }, { status: 400 });
         }
 
-        // Convertir le fichier en un Buffer
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
 
-        // Exemple : Sauvegarder le fichier dans MongoDB GridFS
         const bucket = new GridFSBucket(db);
         const uploadStream = bucket.openUploadStream(file.name);
 

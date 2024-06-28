@@ -1,11 +1,9 @@
-// Import des modules nécessaires
 import { NextRequest, NextResponse } from "next/server";
 import { MongoClient, GridFSBucket, Db, ObjectId } from 'mongodb';
 
 let db: Db;
 let clientPromise: Promise<MongoClient>;
 
-// Fonction pour initialiser la connexion à MongoDB une fois
 const initializeMongoClient = async () => {
   if (!clientPromise) {
     const uri = "mongodb+srv://Luxor:LuxorIA@luxoria.l9osito.mongodb.net/?appName=LuxorIA";

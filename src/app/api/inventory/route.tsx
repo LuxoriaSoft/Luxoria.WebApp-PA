@@ -39,11 +39,6 @@ export async function GET(request: NextRequest) {
         const client = await initializeMongoClient();
         db = client.db('LuxorAI');
 
-        // Log de l'URL de la requête pour le débogage
-        console.log("Request URL:", request.url);
-        console.log("Query parameters:", request.nextUrl.searchParams);
-
-        // Récupérer la liste des fichiers
         const filesList = await getFilesList();
 
         return NextResponse.json({ files: filesList });
