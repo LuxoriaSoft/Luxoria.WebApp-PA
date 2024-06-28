@@ -1,4 +1,4 @@
-'use client';  // Ajoutez ceci au début du fichier
+'use client';
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
@@ -8,8 +8,6 @@ import Modal from 'react-modal';
 
 export default function CardComponent({ _id, name }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
-
-
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -82,6 +80,11 @@ export default function CardComponent({ _id, name }) {
                             objectFit="contain"
                             layout="fill"
                         />
+                    </div>
+                    <div className={"px-4 py-4 sm:px-6 flex items-center justify-center gap-x-2"}>
+                      <DownloadButton _id={_id} />
+                      <DeleteButton _id={_id} />
+                      <ShareButton _id={_id} />
                     </div>
                 </div>
             </Modal>
