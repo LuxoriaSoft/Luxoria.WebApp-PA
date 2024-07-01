@@ -1,20 +1,25 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import DeleteButton from '@/components/deleteButton';
 import DownloadButton from '@/components/downloadButton';
 import Modal from 'react-modal';
 import ShareButton from "@/components/shareButton";
 
-export default function CardComponent({ _id, name }) {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+interface CardComponentProps {
+  _id: string;
+  name: string;
+}
 
-    const openModal = () => {
+export default function CardComponent({ _id, name } : CardComponentProps) {
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+    const openModal = () : void  => {
         setIsModalOpen(true);
     };
 
-    const closeModal = () => {
+    const closeModal = () : void => {
         setIsModalOpen(false);
     };
 
@@ -25,7 +30,7 @@ export default function CardComponent({ _id, name }) {
             </div>
             <div className="relative h-96" onClick={openModal}>
                 <Image
-                    src={`/api/preview?_id=${_id}`}
+                    src={`/api/preview/${_id}`}
                     alt={name}
                     objectFit="contain"
                     layout="fill"
@@ -60,10 +65,10 @@ export default function CardComponent({ _id, name }) {
                         background: 'none',
                         overflow: 'visible',
                         padding: '0',
-                        width: '80%', // Largeur de la modale à 80% de la fenêtre
-                        height: '80%', // Hauteur de la modale à 80% de la fenêtre
-                        maxWidth: 'none', // Pas de largeur maximale
-                        maxHeight: 'none', // Pas de hauteur maximale
+                        width: '80%',
+                        height: '80%',
+                        maxWidth: 'none',
+                        maxHeight: 'none',
                         boxShadow: '0 0 10px rgba(0, 0, 0, 0.25)',
                     },
                 }}

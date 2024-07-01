@@ -1,10 +1,14 @@
 'use client'
 import { IoCloudDownloadOutline } from "react-icons/io5";
 
-export default function DownloadButton({_id}) {
+interface DownloadButtonProps {
+  _id: string;
+}
+
+export default function DownloadButton({_id} : DownloadButtonProps) {
 
   const handleClick = async () => {
-    window.open(`/api/download?_id=${_id}`, "_blank");
+    window.open(`/api/download/${_id}`, "_blank");
   }
 
   return (

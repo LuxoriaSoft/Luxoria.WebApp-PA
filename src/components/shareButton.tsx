@@ -1,12 +1,15 @@
 'use client'
 
-import {MdDeleteOutline} from "react-icons/md";
 import {FaShare} from "react-icons/fa";
 
-export default function ShareButton({_id}) {
+interface ShareButtonProps {
+  _id: string;
+}
+
+export default function ShareButton({_id} : ShareButtonProps) {
 
   const handleClick = async () => {
-    const url = `${window.location.origin}/api/preview?_id=${_id}`;
+    const url = `${window.location.origin}/api/preview/${_id}`;
     await navigator.clipboard.writeText(url);
   }
 

@@ -2,7 +2,11 @@
 
 import {MdDeleteOutline} from "react-icons/md";
 
-export default function DeleteButton({_id}) {
+interface DeleteButtonProps {
+  _id: string;
+}
+
+export default function DeleteButton({_id} : DeleteButtonProps) {
 
   const handleClick = async () => {
     const res = await fetch(`/api/delete?_id=${_id}`, {

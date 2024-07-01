@@ -3,7 +3,13 @@ import { MongoClient, GridFSBucket, Db, ObjectId } from 'mongodb';
 
 let db: Db;
 let clientPromise: Promise<MongoClient>;
-export const getFilesList = async () => {
+
+interface FileDetail {
+    _id: ObjectId;
+    filename: string;
+}
+
+const getFilesList = async () : Promise<FileDetail[]>  => {
     try {
         const client = await initializeMongoClient();
         db = client.db('LuxorAI');
@@ -19,7 +25,7 @@ export const getFilesList = async () => {
     }
 };
 
-const initializeMongoClient = async () => {
+const initializeMongoClient = async () : Promise<MongoClient> => {
     if (!clientPromise) {
         const uri = "mongodb+srv://Luxor:LuxorIA@luxoria.l9osito.mongodb.net/?appName=LuxorIA";
         const client = new MongoClient(uri, {

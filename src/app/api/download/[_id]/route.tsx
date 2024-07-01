@@ -19,26 +19,24 @@ const initializeMongoClient = async () => {
     return clientPromise;
 };
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest, context : any) : Promise<void | NextResponse> {
     try {
         const client = await initializeMongoClient();
         db = client.db('LuxorAI');
 
-        console.log("Request URL:", request.url);
-        console.log("Query parameters:", request.nextUrl.searchParams);
-
-        const fileId = request.nextUrl.searchParams.get("_id");
+        const { params } = context;
+        const fileId = params._id;
 
         if (!fileId) {
-            return NextResponse.json({ error: "Missing file ID" }, { status: 400 });
+            return NextResponse.json({ error: "ID de fichier manquant" }, { status: 400 });
         }
 
         let objectId: ObjectId;
         try {
             objectId = new ObjectId(fileId);
         } catch (error) {
-            console.error("Error converting ID to ObjectId:", error);
-            return NextResponse.json({ error: "Invalid file ID" }, { status: 400 });
+            console.error("Erreur lors de la conversion de l'ID en ObjectId :", error);
+            return NextResponse.json({ error: "ID de fichier invalide" }, { status: 400 });
         }
 
         const bucket = new GridFSBucket(db);
@@ -51,12 +49,12 @@ export async function GET(request: NextRequest) {
             if (fileInfo.length > 0) {
                 filenameFromDB = fileInfo[0].filename;
             } else {
-                console.error("File not found in the database");
-                return NextResponse.json({ error: "File not found in the database" }, { status: 404 });
+                console.error("Fichier non trouvé dans la base de données");
+                return NextResponse.json({ error: "Fichier non trouvé dans la base de données" }, { status: 404 });
             }
         } catch (error) {
-            console.error("Error retrieving filename from the database:", error);
-            return NextResponse.json({ error: "Error retrieving filename" }, { status: 500 });
+            console.error("Erreur lors de la récupération du nom de fichier depuis la base de données :", error);
+            return NextResponse.json({ error: "Erreur lors de la récupération du nom de fichier" }, { status: 500 });
         }
 
         const chunks: Buffer[] = [];
@@ -71,22 +69,23 @@ export async function GET(request: NextRequest) {
                     resolve(new NextResponse(buffer, {
                         status: 200,
                         headers: {
-                            'Content-Disposition': 'inline'
+                            'Content-Type': 'application/octet-stream',
+                            'Content-Disposition': `attachment; filename="${filenameFromDB}"`
                         }
                     }));
                 } else {
-                    reject(NextResponse.json({ error: "Filename not available" }, { status: 500 }));
+                    reject(NextResponse.json({ error: "Nom de fichier non disponible" }, { status: 500 }));
                 }
             });
 
             downloadStream.on('error', (error) => {
-                console.error("Error downloading the file:", error);
-                reject(NextResponse.json({ error: "Error downloading the file" }, { status: 500 }));
+                console.error("Erreur lors du téléchargement du fichier :", error);
+                reject(NextResponse.json({ error: "Erreur lors du téléchargement du fichier" }, { status: 500 }));
             });
         });
 
     } catch (error) {
-        console.error("Error connecting to MongoDB:", error);
-        return NextResponse.json({ error: "Error connecting to MongoDB" }, { status: 500 });
+        console.error("Erreur lors de la connexion à MongoDB :", error);
+        return NextResponse.json({ error: "Erreur lors de la connexion à MongoDB" }, { status: 500 });
     }
 }
