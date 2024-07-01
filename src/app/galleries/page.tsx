@@ -1,7 +1,7 @@
 import NavBarComponent from "@/components/navBar";
 import TableComponent from "@/components/galleries/table";
 
-export default async function GalleriesPage() {
+export default async function GalleriesHome() {
 
   return (
     <main className="container mx-auto">

@@ -3,8 +3,8 @@ import { UserProvider } from '@auth0/nextjs-auth0/client';
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Layout({
-                                     children,
-                                   }: Readonly<{
+                                 children,
+                               }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (

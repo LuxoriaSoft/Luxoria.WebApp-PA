@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0e389d6c-31eb-4d5e-bd65-b626a2162e00" name="Changes" comment="Fix: TS coding styles">
+      <change afterPath="$PROJECT_DIR$/src/app/galleries/[_id]/layout.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/galleries/[_id]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/galleries/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/galleries/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/galleries/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/galleries/page.tsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript JSX File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="feat/auth" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;CPU64x&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "git@github.com:Luxoria-EIP/Luxoria.WebApp-PA.git",
+    "accountId": "cac531d6-3878-47f9-8085-5b8e289bdad5"
+  }
+}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2iSKeMIoLc2JWJkxI78MvIX8ma4" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_interpreter_path": "node",
+    "nodejs_package_manager_path": "npm",
+    "npm.Luxoria WebApp.executor": "Run",
+    "ts.external.directory.path": "/Users/quentin/Code/Luxoria/luxoria.webapp/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/lib/services" />
+      <recent name="$PROJECT_DIR$/src/components/dashboard" />
+      <recent name="$PROJECT_DIR$/src/app/api/preview/[_id]" />
+      <recent name="$PROJECT_DIR$/src/app/api/download/[_id]" />
+      <recent name="$PROJECT_DIR$/src/app/api/upload" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Luxoria WebApp" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-WS-241.18034.50" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0e389d6c-31eb-4d5e-bd65-b626a2162e00" name="Changes" comment="" />
+      <created>1719478632717</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1719478632717</updated>
+      <workItem from="1719478633727" duration="947000" />
+      <workItem from="1719484915112" duration="5603000" />
+      <workItem from="1719491519855" duration="22000" />
+      <workItem from="1719491547358" duration="6396000" />
+      <workItem from="1719498595920" duration="1791000" />
+      <workItem from="1719557395891" duration="47000" />
+      <workItem from="1719557450559" duration="7909000" />
+      <workItem from="1719570580025" duration="5598000" />
+      <workItem from="1719578166789" duration="846000" />
+      <workItem from="1719823711745" duration="119000" />
+      <workItem from="1719830055317" duration="9941000" />
+    </task>
+    <task id="LOCAL-00001" summary="Add: base of the first route">
+      <option name="closed" value="true" />
+      <created>1719491549104</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1719491549104</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Fix: POST upload route">
+      <option name="closed" value="true" />
+      <created>1719492984817</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1719492984817</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Fix: unused libs">
+      <option name="closed" value="true" />
+      <created>1719493076033</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1719493076033</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Merge: from main branch">
+      <option name="closed" value="true" />
+      <created>1719497773184</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1719497773184</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Add: Preview route to preview a picture using its ID">
+      <option name="closed" value="true" />
+      <created>1719557874809</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1719557874809</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Add: Preview route to preview a picture using its ID">
+      <option name="closed" value="true" />
+      <created>1719560116193</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1719560116193</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Add: Preview route to preview a picture using its ID">
+      <option name="closed" value="true" />
+      <created>1719560677475</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1719560677475</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Fix: Picture card">
+      <option name="closed" value="true" />
+      <created>1719560722269</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1719560722269</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Add: grid system to display card 2 by 2">
+      <option name="closed" value="true" />
+      <created>1719561040341</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1719561040341</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Fix: className inside Image component on Picture Component">
+      <option name="closed" value="true" />
+      <created>1719561122953</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1719561122953</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Fix: do not use cache with main fetch on home view">
+      <option name="closed" value="true" />
+      <created>1719564930433</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1719564930433</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Add: delete route on API">
+      <option name="closed" value="true" />
+      <created>1719565236131</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1719565236131</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Add: Download / Delete buttons on card">
+      <option name="closed" value="true" />
+      <created>1719575749868</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1719575749868</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Fix: merge from feat/modal">
+      <option name="closed" value="true" />
+      <created>1719578805892</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1719578805892</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Fix: TS coding styles">
+      <option name="closed" value="true" />
+      <created>1719832583615</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1719832583615</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Add: base of Galleries route on app">
+      <option name="closed" value="true" />
+      <created>1719834448537</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1719834448537</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Fix: API call on each routes">
+      <option name="closed" value="true" />
+      <created>1719836927342</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1719836927342</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Add: Create / Get all galleries">
+      <option name="closed" value="true" />
+      <created>1719838542813</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1719838542813</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Add: Create / Get all galleries">
+      <option name="closed" value="true" />
+      <created>1719838711606</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1719838711607</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Fix: TS coding styles">
+      <option name="closed" value="true" />
+      <created>1719839433611</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1719839433611</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Add: base of the first route" />
+    <MESSAGE value="Fix: POST upload route" />
+    <MESSAGE value="Fix: unused libs" />
+    <MESSAGE value="Merge: from main branch" />
+    <MESSAGE value="Add: Preview route to preview a picture using its ID" />
+    <MESSAGE value="Fix: Picture card" />
+    <MESSAGE value="Add: grid system to display card 2 by 2" />
+    <MESSAGE value="Fix: className inside Image component on Picture Component" />
+    <MESSAGE value="Fix: do not use cache with main fetch on home view" />
+    <MESSAGE value="Add: delete route on API" />
+    <MESSAGE value="Add: Download / Delete buttons on card" />
+    <MESSAGE value="Fix: merge from feat/modal" />
+    <MESSAGE value="Add: base of Galleries route on app" />
+    <MESSAGE value="Fix: API call on each routes" />
+    <MESSAGE value="Add: Create / Get all galleries" />
+    <MESSAGE value="Fix: TS coding styles" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: TS coding styles" />
+  </component>
+</project>
