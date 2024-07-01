@@ -1,8 +1,16 @@
 "use client";
 import { useState, useEffect } from 'react';
 
+// Define Gallery interface
+interface Gallery {
+  _id: string; // or number, adjust according to your actual type
+  name: string;
+  description: string;
+  email: string;
+}
+
 export default function TableComponent() {
-  const [galleries, setGalleries] = useState([]);
+  const [galleries, setGalleries] = useState<Gallery[]>([]); // Initialize with Gallery[]
 
   useEffect(() => {
     const fetchData = async () => {
@@ -12,9 +20,10 @@ export default function TableComponent() {
           throw new Error('Failed to fetch galleries');
         }
         const data = await response.json();
-        setGalleries(data.galleries);
+        setGalleries(data.galleries); // Assuming the API response has a 'galleries' property
       } catch (error) {
         console.error('Error fetching galleries:', error);
+        // Handle error state or display an error message
       }
     };
 
