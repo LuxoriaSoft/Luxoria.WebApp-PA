@@ -1,29 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { MongoClient, GridFSBucket, Db } from 'mongodb';
+import {getDbInstance} from "@/lib/services/database.service";
+import {GridFSBucket} from "mongodb";
 
-let db: Db;
-let clientPromise: Promise<MongoClient>;
-
-const initializeMongoClient = async () => {
-    if (!clientPromise) {
-        const uri = "mongodb+srv://Luxor:LuxorIA@luxoria.l9osito.mongodb.net/?appName=LuxorIA";
-        const client = new MongoClient(uri, {
-            serverApi: {
-                version: '1',
-                strict: true,
-                deprecationErrors: true,
-            }
-        });
-        clientPromise = client.connect();
-    }
-    return clientPromise;
-};
-
-// Fonction pour gérer les requêtes POST
 export async function POST(request: NextRequest) {
     try {
-        const client = await initializeMongoClient();
-        db = client.db('LuxorAI');
+        let db = await getDbInstance();
 
         const data = await request.formData();
         const file = data.get("file");

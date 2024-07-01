@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { MongoClient, GridFSBucket, Db, ObjectId } from 'mongodb';
-
-let db: Db;
-let clientPromise: Promise<MongoClient>;
+import { GridFSBucket, ObjectId } from 'mongodb';
+import {getDbInstance} from "@/lib/services/database.service";
 
 interface FileDetail {
     _id: ObjectId;
@@ -11,8 +9,7 @@ interface FileDetail {
 
 const getFilesList = async () : Promise<FileDetail[]>  => {
     try {
-        const client = await initializeMongoClient();
-        db = client.db('LuxorAI');
+        let db = await getDbInstance();
 
         const bucket = new GridFSBucket(db);
         const files = await bucket.find().toArray();
@@ -25,25 +22,9 @@ const getFilesList = async () : Promise<FileDetail[]>  => {
     }
 };
 
-const initializeMongoClient = async () : Promise<MongoClient> => {
-    if (!clientPromise) {
-        const uri = "mongodb+srv://Luxor:LuxorIA@luxoria.l9osito.mongodb.net/?appName=LuxorIA";
-        const client = new MongoClient(uri, {
-            serverApi: {
-                version: '1',
-                strict: true,
-                deprecationErrors: true,
-            }
-        });
-        clientPromise = client.connect();
-    }
-    return clientPromise;
-};
-
 export async function GET(request: NextRequest) {
     try {
-        const client = await initializeMongoClient();
-        db = client.db('LuxorAI');
+        let db = await getDbInstance();
 
         const filesList = await getFilesList();
 

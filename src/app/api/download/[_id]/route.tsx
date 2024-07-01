@@ -1,28 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { MongoClient, GridFSBucket, Db, ObjectId } from 'mongodb';
-
-let db: Db;
-let clientPromise: Promise<MongoClient>;
-
-const initializeMongoClient = async () => {
-    if (!clientPromise) {
-        const uri = "mongodb+srv://Luxor:LuxorIA@luxoria.l9osito.mongodb.net/?appName=LuxorIA";
-        const client = new MongoClient(uri, {
-            serverApi: {
-                version: '1',
-                strict: true,
-                deprecationErrors: true,
-            }
-        });
-        clientPromise = client.connect();
-    }
-    return clientPromise;
-};
+import {getDbInstance} from "@/lib/services/database.service";
+import {GridFSBucket, ObjectId} from "mongodb";
 
 export async function GET(request: NextRequest, context : any) : Promise<void | NextResponse> {
     try {
-        const client = await initializeMongoClient();
-        db = client.db('LuxorAI');
+        let db = await getDbInstance();
 
         const { params } = context;
         const fileId = params._id;
