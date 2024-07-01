@@ -1,6 +1,6 @@
 import NavBarComponent from "@/components/navBar";
 import CardComponent from "@/components/picture";
-import GridComponent from "@/components/grid";
+import GridComponent from "@/components/dashboard/grid";
 
 export default async function Home() {
 

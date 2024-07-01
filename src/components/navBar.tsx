@@ -16,6 +16,8 @@ interface CallToAction {
 }
 
 const solutions: Solution[] = [
+  { name: 'Dashboard', description: 'Get an overview of your account', href: '/', icon: CursorArrowRaysIcon },
+  { name: 'Galleries', description: 'Manage all your galleries', href: '/galleries', icon: CursorArrowRaysIcon },
   { name: 'List', description: 'Get pictures list', href: '/api/inventory', icon: CursorArrowRaysIcon },
 ];
 

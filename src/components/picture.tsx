@@ -82,7 +82,7 @@ export default function CardComponent({ _id, name } : CardComponentProps) {
                     </button>
                     <div className="relative w-full h-full">
                         <Image
-                            src={`/api/preview?_id=${_id}`}
+                            src={`/api/preview/${_id}`}
                             alt={name}
                             objectFit="contain"
                             layout="fill"
