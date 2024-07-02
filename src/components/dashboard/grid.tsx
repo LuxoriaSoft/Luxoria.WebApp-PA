@@ -11,6 +11,14 @@ async function fetchInventory() {
   return res.json();
 }
 
+async function fetchContentByID(id: string) {
+  const res = await fetch(`/api/inventory/${id}`);
+  if (!res.ok) {
+    throw new Error(`Failed to fetch inventory data`);
+  }
+  return res.json();
+}
+
 interface InventoryItem {
   _id: string;
   filename: string;
@@ -29,7 +37,13 @@ export default function GridComponent({ galleryId }: GridComponentProps) {
 
   useEffect(() => {
     if (galleryId) {
-
+      fetchContentByID(galleryId)
+          .then((data: InventoryData) => {
+            setInventory(data);
+          })
+          .catch((error) => {
+            console.error('Error fetching inventory:', error);
+          });
     } else {
       fetchInventory()
         .then((data: InventoryData) => {
