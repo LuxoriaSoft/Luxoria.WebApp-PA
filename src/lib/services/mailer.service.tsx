@@ -28,7 +28,7 @@ class MailerService {
 
   async sendEmail(gallery: Gallery) {
     const mailOptions = {
-      from: `"Gallery Notification" <${process.env.SMTP_USER}>`,
+      from: `"Luxoria App" <${process.env.SMTP_USER}>`,
       to: gallery.email,
       subject: `Luxoria - Invited to ${gallery.name}`,
       text: `Dear ${gallery.name},\n\n${gallery.description}`,

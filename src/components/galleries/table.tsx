@@ -13,6 +13,7 @@ export default function TableComponent() {
   const [galleries, setGalleries] = useState<Gallery[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newGallery, setNewGallery] = useState({ name: '', description: '', email: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,7 +52,8 @@ export default function TableComponent() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Submitting form', newGallery); // Debug log
+    console.log('Submitting form', newGallery);
+    setIsSubmitting(true);
 
     try {
       const response = await fetch('/api/galleries/create', {
@@ -73,6 +75,8 @@ export default function TableComponent() {
       closeModal();
     } catch (error) {
       console.error('Error adding gallery:', error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -170,56 +174,64 @@ export default function TableComponent() {
             }}
         >
           <h2 className="text-lg font-bold mb-4">Add New Gallery</h2>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700">Name</label>
-              <input
-                  type="text"
-                  name="name"
-                  value={newGallery.name}
-                  onChange={handleInputChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  required
-              />
+          {isSubmitting ? (
+            <div className={"text-center justify-center"}>
+              <p className="text-gray-500">Please wait...</p>
             </div>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700">Description</label>
-              <input
-                  type="text"
-                  name="description"
-                  value={newGallery.description}
-                  onChange={handleInputChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  required
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700">Email</label>
-              <input
-                  type="email"
-                  name="email"
-                  value={newGallery.email}
-                  onChange={handleInputChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  required
-              />
-            </div>
-            <div className="flex justify-end">
-              <button
-                  type="button"
-                  onClick={closeModal}
-                  className="mr-2 inline-flex justify-center rounded-md border border-gray-300 px-4 py-2 bg-white text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                Cancel
-              </button>
-              <button
-                  type="submit"
-                  className="inline-flex justify-center rounded-md border border-transparent px-4 py-2 bg-indigo-600 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                Add Gallery
-              </button>
-            </div>
-          </form>
+          ) : (
+            <>
+              <form onSubmit={handleSubmit}>
+              <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700">Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={newGallery.name}
+                    onChange={handleInputChange}
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    required
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700">Description</label>
+                  <input
+                    type="text"
+                    name="description"
+                    value={newGallery.description}
+                    onChange={handleInputChange}
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    required
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={newGallery.email}
+                    onChange={handleInputChange}
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    required
+                  />
+                </div>
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    onClick={closeModal}
+                    className="mr-2 inline-flex justify-center rounded-md border border-gray-300 px-4 py-2 bg-white text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="inline-flex justify-center rounded-md border border-transparent px-4 py-2 bg-indigo-600 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    Add Gallery
+                  </button>
+                </div>
+              </form>
+            </>
+          )}
         </Modal>
       </div>
   );
