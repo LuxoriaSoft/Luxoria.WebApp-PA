@@ -6,6 +6,7 @@ import DeleteButton from '@/components/deleteButton';
 import DownloadButton from '@/components/downloadButton';
 import Modal from 'react-modal';
 import ShareButton from "@/components/shareButton";
+import MoveToComponent from "@/components/moveTo";
 
 interface CardComponentProps {
   _id: string;
@@ -41,6 +42,7 @@ export default function CardComponent({ _id, name } : CardComponentProps) {
                 <DownloadButton _id={_id} />
                 <DeleteButton _id={_id} />
                 <ShareButton _id={_id} />
+                <MoveToComponent _id={_id} />
             </div>
 
             <Modal
