@@ -115,7 +115,7 @@ export default function TableComponent() {
                 {galleries.map((gallery) => (
                   <tr key={gallery._id}>
                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                        {gallery.name}
+                        <a href={`galleries/${gallery._id}`}>{gallery.name}</a>
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{gallery.description}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{gallery.email}</td>
@@ -143,7 +143,7 @@ export default function TableComponent() {
 
         <Modal
           isOpen={isModalOpen}
-            onRequestClose={closeModal}
+          onRequestClose={closeModal}
             contentLabel="Add Gallery Modal"
             ariaHideApp={false}
             style={{

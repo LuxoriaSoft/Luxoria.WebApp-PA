@@ -8,6 +8,8 @@ export async function POST(request: NextRequest) {
 
         const data = await request.formData();
         const file = data.get("file");
+        const relatedToGallery = data.get("relatedToGallery");
+
 
         if (!file || !(file instanceof File)) {
             return NextResponse.json({ error: "Aucun fichier uploadé ou format invalide" }, { status: 400 });
@@ -17,7 +19,11 @@ export async function POST(request: NextRequest) {
         const buffer = Buffer.from(bytes);
 
         const bucket = new GridFSBucket(db);
-        const uploadStream = bucket.openUploadStream(file.name);
+        const uploadStream = bucket.openUploadStream(file.name, {
+            metadata: {
+                relatedToGallery: relatedToGallery || null
+            }
+        });
 
         uploadStream.end(buffer);
 
