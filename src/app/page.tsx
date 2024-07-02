@@ -12,7 +12,7 @@ export default async function Home() {
 
       <div className="mt-4">
         <h1 className="text-2xl font-bold mb-4">Inventory</h1>
-        <GridComponent />
+        <GridComponent galleryId={null}/>
       </div>
     </main>
   );

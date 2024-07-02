@@ -20,17 +20,25 @@ interface InventoryData {
   files: InventoryItem[];
 }
 
-export default function GridComponent() {
+interface GridComponentProps {
+  galleryId: string | null;
+}
+
+export default function GridComponent({ galleryId }: GridComponentProps) {
   const [inventory, setInventory] = useState<InventoryData | null>(null);
 
   useEffect(() => {
-    fetchInventory()
-      .then((data: InventoryData) => {
-        setInventory(data);
-      })
-      .catch((error) => {
-        console.error('Error fetching inventory:', error);
-      });
+    if (galleryId) {
+
+    } else {
+      fetchInventory()
+        .then((data: InventoryData) => {
+          setInventory(data);
+        })
+        .catch((error) => {
+          console.error('Error fetching inventory:', error);
+        });
+    }
   }, []);
 
   return (

@@ -44,6 +44,11 @@ export default function TableComponent() {
     setNewGallery({ ...newGallery, [name]: value });
   };
 
+  const handleCopyLink = async (gallery: Gallery) => {
+    const url = `${window.location.origin}/galleries/${gallery._id}`;
+    await navigator.clipboard.writeText(url);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Submitting form', newGallery); // Debug log
@@ -108,18 +113,27 @@ export default function TableComponent() {
                 </thead>
                 <tbody className="divide-y divide-gray-200">
                 {galleries.map((gallery) => (
-                    <tr key={gallery._id}>
+                  <tr key={gallery._id}>
                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                         {gallery.name}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{gallery.description}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{gallery.email}</td>
-                      <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                        <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                          Edit<span className="sr-only">, {gallery.name}</span>
-                        </a>
-                      </td>
-                    </tr>
+                    <td
+                      className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0 space-x-2">
+                      <button className="text-indigo-600 hover:text-indigo-900" onClick={() => handleCopyLink(gallery)}>
+                        Copy Link<span className="sr-only">, {gallery.name}</span>
+                      </button>
+
+                      <button className="text-gray-600 hover:text-gray-900">
+                        Edit<span className="sr-only">, {gallery.name}</span>
+                      </button>
+
+                      <button className="text-red-600 hover:text-red-900">
+                        Delete<span className="sr-only">, {gallery.name}</span>
+                      </button>
+                    </td>
+                  </tr>
                 ))}
                 </tbody>
               </table>
@@ -128,7 +142,7 @@ export default function TableComponent() {
         </div>
 
         <Modal
-            isOpen={isModalOpen}
+          isOpen={isModalOpen}
             onRequestClose={closeModal}
             contentLabel="Add Gallery Modal"
             ariaHideApp={false}

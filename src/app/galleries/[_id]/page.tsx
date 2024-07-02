@@ -1,4 +1,5 @@
 import NavBarComponent from "@/components/navBar";
+import GridComponent from "@/components/dashboard/grid";
 
 export default async function GalleryInfo(context : any) {
   const { params } = context;
@@ -15,6 +16,8 @@ export default async function GalleryInfo(context : any) {
 
         <p>Specific gallery using its gallery ID</p>
         <p>ID : {galleryId}</p>
+
+        <GridComponent galleryId={galleryId}/>
       </div>
     </main>
   );
