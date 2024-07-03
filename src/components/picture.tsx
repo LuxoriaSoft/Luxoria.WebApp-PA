@@ -9,10 +9,10 @@ import ShareButton from "@/components/shareButton";
 import MoveToComponent from "@/components/moveTo";
 
 interface CardComponentProps {
-  _id: string;
-  name: string;
-  galleryName: string | null;
-  afterDelete?: () => void;
+    _id: string;
+    name: string;
+    galleryName: string | null;
+    afterDelete?: () => void;
 }
 
 export default function CardComponent({ _id, name, galleryName, afterDelete } : CardComponentProps) {
@@ -29,24 +29,26 @@ export default function CardComponent({ _id, name, galleryName, afterDelete } : 
     return (
         <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow">
             <div className="px-4 py-5 sm:px-6 flex justify-between">
-              <div>
-                {name}
-              </div>
-              <div>
-                {galleryName &&
-                  <span
-                    className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10">
+                <div>
+                    {name}
+                </div>
+                <div>
+                    {galleryName &&
+                        <span
+                            className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10">
                     {galleryName}
                   </span>
-                }
-              </div>
+                    }
+                </div>
             </div>
-          <div className="relative h-96" onClick={openModal}>
-            <Image
-              src={`/api/preview/${_id}`}
-              alt={name}
-              objectFit="contain"
-                    layout="fill"
+            <div className="relative h-96" onClick={openModal}>
+                <Image
+                    src={`/api/preview/${_id}`}
+                    alt={name}
+                    fill
+                    style={{ objectFit: 'contain' }}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    priority  // Ajout de priority pour les images importantes
                 />
             </div>
 
@@ -98,8 +100,10 @@ export default function CardComponent({ _id, name, galleryName, afterDelete } : 
                         <Image
                             src={`/api/preview/${_id}`}
                             alt={name}
-                            objectFit="contain"
-                            layout="fill"
+                            fill
+                            style={{ objectFit: 'contain' }}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 50vw"
+                            priority  // Ajout de priority pour l'image du modal
                         />
                     </div>
                 </div>
