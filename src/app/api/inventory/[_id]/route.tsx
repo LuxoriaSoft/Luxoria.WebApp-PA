@@ -7,6 +7,7 @@ import { getDbInstance } from "@/lib/services/database.service";
 interface FileDetail {
     _id: ObjectId;
     filename: string;
+    relatedToGalleryID: string | null;
 }
 
 const getFilesList = async (galleryId: string): Promise<FileDetail[]> => {
@@ -15,7 +16,13 @@ const getFilesList = async (galleryId: string): Promise<FileDetail[]> => {
 
         const bucket = new GridFSBucket(db);
         const files = await bucket.find({ 'metadata.relatedToGallery': new ObjectId(galleryId) }).toArray();
-        const fileDetails = files.map(file => ({ _id: file._id, filename: file.filename }));
+        const fileDetails = files.map(file => (
+          {
+              _id: file._id,
+              filename: file.filename,
+              relatedToGalleryID: file.metadata?.relatedToGallery || null
+          }
+        ));
 
         return fileDetails;
     } catch (error) {

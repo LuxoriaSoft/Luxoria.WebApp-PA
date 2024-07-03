@@ -11,7 +11,7 @@ async function fetchInventory() {
   return res.json();
 }
 
-async function fetchContentByID(id: string) {
+async function fetchInventoryByID(id: string) {
   const res = await fetch(`/api/inventory/${id}`);
   if (!res.ok) {
     throw new Error(`Failed to fetch inventory data`);
@@ -19,13 +19,29 @@ async function fetchContentByID(id: string) {
   return res.json();
 }
 
+async function fetchGalleries() {
+  const res = await fetch('/api/galleries');
+  if (!res.ok) {
+    throw new Error('Failed to fetch galleries data');
+  }
+  return res.json();
+}
+
 interface InventoryItem {
   _id: string;
   filename: string;
+  relatedToGalleryID: string | null;
 }
 
 interface InventoryData {
   files: InventoryItem[];
+}
+
+interface GalleryData {
+  _id: string;
+  name: string;
+  description: string;
+  email: string;
 }
 
 interface GridComponentProps {
@@ -34,10 +50,11 @@ interface GridComponentProps {
 
 export default function GridComponent({ galleryId }: GridComponentProps) {
   const [inventory, setInventory] = useState<InventoryData | null>(null);
+  const [galleries, setGalleries] = useState<GalleryData[]>([]);
 
   useEffect(() => {
     if (galleryId) {
-      fetchContentByID(galleryId)
+      fetchInventoryByID(galleryId)
           .then((data: InventoryData) => {
             setInventory(data);
           })
@@ -53,6 +70,15 @@ export default function GridComponent({ galleryId }: GridComponentProps) {
           console.error('Error fetching inventory:', error);
         });
     }
+
+    console.log('Fetching galleries...');
+    fetchGalleries()
+      .then((data) => {
+        setGalleries(data.galleries);
+      })
+      .catch((error) => {
+        console.error('Error fetching galleries:', error);
+      });
   }, [galleryId]);
 
   const RemoveCardFromList = async (id: string) => {
@@ -68,7 +94,14 @@ export default function GridComponent({ galleryId }: GridComponentProps) {
       {inventory && Array.isArray(inventory.files) && inventory.files.length > 0 ? (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {inventory.files.map((item) => (
-            <CardComponent key={item._id} _id={item._id} name={item.filename} afterDelete={() => RemoveCardFromList(item._id)} />
+            <CardComponent
+              key={item._id}
+              _id={item._id}
+              name={item.filename}
+              galleryName={
+                galleries.find((gallery) => gallery._id === item.relatedToGalleryID)?.name || null
+              }
+              afterDelete={() => RemoveCardFromList(item._id)} />
           ))}
         </div>
       ) : (
