@@ -71,7 +71,6 @@ export default function GridComponent({ galleryId }: GridComponentProps) {
         });
     }
 
-    console.log('Fetching galleries...');
     fetchGalleries()
       .then((data) => {
         setGalleries(data.galleries);
@@ -79,7 +78,7 @@ export default function GridComponent({ galleryId }: GridComponentProps) {
       .catch((error) => {
         console.error('Error fetching galleries:', error);
       });
-  }, [galleryId]);
+  }, [galleryId, setInventory, setGalleries]);
 
   const RemoveCardFromList = async (id: string) => {
     const updatedFiles = inventory?.files.filter((item) => item._id !== id);
