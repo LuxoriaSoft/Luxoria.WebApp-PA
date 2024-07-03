@@ -133,16 +133,22 @@ export default function TableComponent() {
 
     if (galleryToEdit) {
       try {
-        const response = await fetch(`/api/galleries/edit/${galleryToEdit._id}`, {
+        const response = await fetch(`/api/galleries/edit`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(galleryToEdit),
+          body: JSON.stringify({
+            id: galleryToEdit._id,
+            name: galleryToEdit.name,
+            description: galleryToEdit.description,
+            email: galleryToEdit.email,
+          }),
         });
 
         if (!response.ok) {
-          throw new Error('Failed to edit gallery');
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Failed to edit gallery');
         }
 
         const data = await response.json();
@@ -155,6 +161,9 @@ export default function TableComponent() {
       }
     }
   };
+
+
+
 
   return (
       <div className="px-4 sm:px-6 lg:px-8">
