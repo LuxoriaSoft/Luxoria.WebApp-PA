@@ -55,12 +55,20 @@ export default function GridComponent({ galleryId }: GridComponentProps) {
     }
   }, [galleryId]);
 
+  const RemoveCardFromList = async (id: string) => {
+    const updatedFiles = inventory?.files.filter((item) => item._id !== id);
+    if (!updatedFiles) {
+      return;
+    }
+    setInventory({ files: updatedFiles });
+  }
+
   return (
     <>
       {inventory && Array.isArray(inventory.files) && inventory.files.length > 0 ? (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {inventory.files.map((item) => (
-            <CardComponent key={item._id} _id={item._id} name={item.filename} />
+            <CardComponent key={item._id} _id={item._id} name={item.filename} afterDelete={() => RemoveCardFromList(item._id)} />
           ))}
         </div>
       ) : (
