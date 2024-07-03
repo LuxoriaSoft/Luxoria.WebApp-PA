@@ -116,7 +116,7 @@ const FeedbackContent = ({ title, content, postedAt }: Comment) => {
   const formattedDate = sentAt.toLocaleString('fr-FR');
 
   return (
-    <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow-lg text-start">
+    <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-50 shadow-sm text-start">
       <div className="px-4 py-5 sm:px-6 flex flex-col">
         <div className={"text-lg font-medium"}>
           {title}
@@ -174,11 +174,13 @@ function FeedbackButton({ _id, pictureName }: FeedbackButtonProps) {
           <div className={"text-center"}>
             <h3 className={"text-lg font-semibold mb-4"}>Feedback - {pictureName}</h3>
 
-            <div id={"history"} className="max-h-96 overflow-y-auto">
+            <div id={"history"} className="max-h-96 overflow-y-auto space-y-1 pb-1">
               {comments.map((comment) => (
                 <FeedbackContent key={comment._id} {...comment} />
               ))}
             </div>
+
+            <div className={"border-t border-gray-200 mt-4"} />
 
             <div className={"bottom-0"}>
               <AddFeedbackComponent _id={_id} appendFeedbacks={setComments}/>
