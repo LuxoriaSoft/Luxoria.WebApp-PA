@@ -11,9 +11,10 @@ import MoveToComponent from "@/components/moveTo";
 interface CardComponentProps {
   _id: string;
   name: string;
+  afterDelete?: () => void;
 }
 
-export default function CardComponent({ _id, name } : CardComponentProps) {
+export default function CardComponent({ _id, name, afterDelete } : CardComponentProps) {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
     const openModal = () : void  => {
@@ -40,7 +41,7 @@ export default function CardComponent({ _id, name } : CardComponentProps) {
 
             <div className="px-4 py-4 sm:px-6 flex items-center justify-center gap-x-2">
                 <DownloadButton _id={_id} />
-                <DeleteButton _id={_id} />
+                <DeleteButton _id={_id} func={afterDelete} />
                 <ShareButton _id={_id} />
                 <MoveToComponent _id={_id} />
             </div>

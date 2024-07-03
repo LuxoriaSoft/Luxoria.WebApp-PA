@@ -4,17 +4,20 @@ import {MdDeleteOutline} from "react-icons/md";
 
 interface DeleteButtonProps {
   _id: string;
+  func?: () => void;
 }
 
-export default function DeleteButton({_id} : DeleteButtonProps) {
+export default function DeleteButton({_id, func } : DeleteButtonProps) {
 
   const handleClick = async () => {
     const res = await fetch(`/api/delete?_id=${_id}`, {
       method: "DELETE",
     });
     if (res.ok) {
-      alert("File deleted !");
-      window.location.reload();
+      console.log("Deleted successfully !");
+      if (func) {
+        func();
+      }
     } else {
       alert("Error during deletion !");
     }
