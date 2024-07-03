@@ -11,7 +11,11 @@ interface Gallery {
 
 export default function TableComponent() {
   const [galleries, setGalleries] = useState<Gallery[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [galleryToDelete, setGalleryToDelete] = useState<Gallery | null>(null);
+  const [galleryToEdit, setGalleryToEdit] = useState<Gallery | null>(null);
   const [newGallery, setNewGallery] = useState({ name: '', description: '', email: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -32,17 +36,41 @@ export default function TableComponent() {
     fetchData();
   }, []);
 
-  const openModal = () => {
-    setIsModalOpen(true);
+  const openAddModal = () => {
+    setIsAddModalOpen(true);
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
+  const closeAddModal = () => {
+    setIsAddModalOpen(false);
+  };
+
+  const openEditModal = (gallery: Gallery) => {
+    setGalleryToEdit(gallery);
+    setIsEditModalOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setGalleryToEdit(null);
+    setIsEditModalOpen(false);
+  };
+
+  const openConfirmDeleteModal = (gallery: Gallery) => {
+    setGalleryToDelete(gallery);
+    setIsConfirmDeleteModalOpen(true);
+  };
+
+  const closeConfirmDeleteModal = () => {
+    setGalleryToDelete(null);
+    setIsConfirmDeleteModalOpen(false);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setNewGallery({ ...newGallery, [name]: value });
+    if (galleryToEdit) {
+      setGalleryToEdit({ ...galleryToEdit, [name]: value });
+    } else {
+      setNewGallery({ ...newGallery, [name]: value });
+    }
   };
 
   const handleCopyLink = async (gallery: Gallery) => {
@@ -50,26 +78,29 @@ export default function TableComponent() {
     await navigator.clipboard.writeText(url);
   };
 
-  const handleDelete = async (gallery: Gallery) => {
-    try {
-      const response = await fetch(`/api/galleries/delete/${gallery._id}`, {
-        method: 'DELETE',
-      });
+  const handleDelete = async () => {
+    if (galleryToDelete) {
+      try {
+        const response = await fetch(`/api/galleries/delete/${galleryToDelete._id}`, {
+          method: 'DELETE',
+        });
 
-      if (!response.ok) {
-        throw new Error('Failed to delete gallery');
+        if (!response.ok) {
+          throw new Error('Failed to delete gallery');
+        }
+
+        const data = await response.json();
+        setGalleries(galleries.filter((g) => g._id !== galleryToDelete._id));
+      } catch (error) {
+        console.error('Error deleting gallery:', error);
+      } finally {
+        closeConfirmDeleteModal();
       }
-
-      const data = await response.json();
-      setGalleries(galleries.filter((g) => g._id !== gallery._id));
-    } catch (error) {
-      console.error('Error deleting gallery:', error);
     }
-  }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Submitting form', newGallery);
     setIsSubmitting(true);
 
     try {
@@ -86,14 +117,42 @@ export default function TableComponent() {
       }
 
       const data = await response.json();
-      console.log('Gallery added:', data); // Debug log
       setGalleries([...galleries, data.body]);
       setNewGallery({ name: '', description: '', email: '' });
-      closeModal();
+      closeAddModal();
     } catch (error) {
       console.error('Error adding gallery:', error);
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleEditSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    if (galleryToEdit) {
+      try {
+        const response = await fetch(`/api/galleries/edit/${galleryToEdit._id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(galleryToEdit),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to edit gallery');
+        }
+
+        const data = await response.json();
+        setGalleries(galleries.map((g) => (g._id === galleryToEdit._id ? data.body : g)));
+        closeEditModal();
+      } catch (error) {
+        console.error('Error editing gallery:', error);
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -105,7 +164,7 @@ export default function TableComponent() {
           <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
             <button
                 type="button"
-                onClick={openModal}
+                onClick={openAddModal}
                 className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               Add Gallery
@@ -134,27 +193,27 @@ export default function TableComponent() {
                 </thead>
                 <tbody className="divide-y divide-gray-200">
                 {galleries.map((gallery) => (
-                  <tr key={gallery._id}>
+                    <tr key={gallery._id}>
                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                         <a href={`galleries/${gallery._id}`}>{gallery.name}</a>
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{gallery.description}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{gallery.email}</td>
-                    <td
-                      className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0 space-x-2">
-                      <button className="text-indigo-600 hover:text-indigo-900" onClick={() => handleCopyLink(gallery)}>
-                        Copy Link<span className="sr-only">, {gallery.name}</span>
-                      </button>
+                      <td
+                          className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0 space-x-2">
+                        <button className="text-indigo-600 hover:text-indigo-900" onClick={() => handleCopyLink(gallery)}>
+                          Copy Link<span className="sr-only">, {gallery.name}</span>
+                        </button>
 
-                      <button className="text-gray-600 hover:text-gray-900">
-                        Edit<span className="sr-only">, {gallery.name}</span>
-                      </button>
+                        <button className="text-gray-600 hover:text-gray-900" onClick={() => openEditModal(gallery)}>
+                          Edit<span className="sr-only">, {gallery.name}</span>
+                        </button>
 
-                      <button className="text-red-600 hover:text-red-900" onClick={() => handleDelete(gallery)}>
-                        Delete<span className="sr-only">, {gallery.name}</span>
-                      </button>
-                    </td>
-                  </tr>
+                        <button className="text-red-600 hover:text-red-900" onClick={() => openConfirmDeleteModal(gallery)}>
+                          Delete<span className="sr-only">, {gallery.name}</span>
+                        </button>
+                      </td>
+                    </tr>
                 ))}
                 </tbody>
               </table>
@@ -163,8 +222,8 @@ export default function TableComponent() {
         </div>
 
         <Modal
-          isOpen={isModalOpen}
-          onRequestClose={closeModal}
+            isOpen={isAddModalOpen}
+            onRequestClose={closeAddModal}
             contentLabel="Add Gallery Modal"
             ariaHideApp={false}
             style={{
@@ -192,63 +251,195 @@ export default function TableComponent() {
         >
           <h2 className="text-lg font-bold mb-4">Add New Gallery</h2>
           {isSubmitting ? (
-            <div className={"text-center justify-center"}>
-              <p className="text-gray-500">Please wait...</p>
-            </div>
+              <div className={"text-center justify-center"}>
+                <p className="text-gray-500">Please wait...</p>
+              </div>
           ) : (
-            <>
               <form onSubmit={handleSubmit}>
-              <div className="mb-4">
+                <div className="mb-4">
                   <label className="block text-sm font-medium text-gray-700">Name</label>
                   <input
-                    type="text"
-                    name="name"
-                    value={newGallery.name}
-                    onChange={handleInputChange}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    required
+                      type="text"
+                      name="name"
+                      value={newGallery.name}
+                      onChange={handleInputChange}
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      required
                   />
                 </div>
                 <div className="mb-4">
                   <label className="block text-sm font-medium text-gray-700">Description</label>
                   <input
-                    type="text"
-                    name="description"
-                    value={newGallery.description}
-                    onChange={handleInputChange}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    required
+                      type="text"
+                      name="description"
+                      value={newGallery.description}
+                      onChange={handleInputChange}
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      required
                   />
                 </div>
                 <div className="mb-4">
                   <label className="block text-sm font-medium text-gray-700">Email</label>
                   <input
-                    type="email"
-                    name="email"
-                    value={newGallery.email}
-                    onChange={handleInputChange}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    required
+                      type="email"
+                      name="email"
+                      value={newGallery.email}
+                      onChange={handleInputChange}
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      required
                   />
                 </div>
                 <div className="flex justify-end">
                   <button
-                    type="button"
-                    onClick={closeModal}
-                    className="mr-2 inline-flex justify-center rounded-md border border-gray-300 px-4 py-2 bg-white text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      type="button"
+                      onClick={closeAddModal}
+                      className="mr-2 inline-flex justify-center rounded-md border border-gray-300 px-4 py-2 bg-white text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
                     Cancel
                   </button>
                   <button
-                    type="submit"
-                    className="inline-flex justify-center rounded-md border border-transparent px-4 py-2 bg-indigo-600 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      type="submit"
+                      className="inline-flex justify-center rounded-md border border-transparent px-4 py-2 bg-indigo-600 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
                     Add Gallery
                   </button>
                 </div>
               </form>
-            </>
           )}
+        </Modal>
+
+        <Modal
+            isOpen={isEditModalOpen}
+            onRequestClose={closeEditModal}
+            contentLabel="Edit Gallery Modal"
+            ariaHideApp={false}
+            style={{
+              overlay: {
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: 'rgba(0, 0, 0, 0.75)',
+              },
+              content: {
+                position: 'relative',
+                top: 'auto',
+                left: 'auto',
+                right: 'auto',
+                bottom: 'auto',
+                border: 'none',
+                background: 'white',
+                overflow: 'visible',
+                padding: '20px',
+                width: '400px',
+                maxHeight: '80%',
+                boxShadow: '0 0 10px rgba(0, 0, 0, 0.25)',
+              },
+            }}
+        >
+          <h2 className="text-lg font-bold mb-4">Edit Gallery</h2>
+          {isSubmitting ? (
+              <div className={"text-center justify-center"}>
+                <p className="text-gray-500">Please wait...</p>
+              </div>
+          ) : (
+              <form onSubmit={handleEditSubmit}>
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700">Name</label>
+                  <input
+                      type="text"
+                      name="name"
+                      value={galleryToEdit?.name || ''}
+                      onChange={handleInputChange}
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      required
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700">Description</label>
+                  <input
+                      type="text"
+                      name="description"
+                      value={galleryToEdit?.description || ''}
+                      onChange={handleInputChange}
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      required
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700">Email</label>
+                  <input
+                      type="email"
+                      name="email"
+                      value={galleryToEdit?.email || ''}
+                      onChange={handleInputChange}
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      required
+                  />
+                </div>
+                <div className="flex justify-end">
+                  <button
+                      type="button"
+                      onClick={closeEditModal}
+                      className="mr-2 inline-flex justify-center rounded-md border border-gray-300 px-4 py-2 bg-white text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                      type="submit"
+                      className="inline-flex justify-center rounded-md border border-transparent px-4 py-2 bg-indigo-600 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    Save Changes
+                  </button>
+                </div>
+              </form>
+          )}
+        </Modal>
+
+        <Modal
+            isOpen={isConfirmDeleteModalOpen}
+            onRequestClose={closeConfirmDeleteModal}
+            contentLabel="Confirm Delete Modal"
+            ariaHideApp={false}
+            style={{
+              overlay: {
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: 'rgba(0, 0, 0, 0.75)',
+              },
+              content: {
+                position: 'relative',
+                top: 'auto',
+                left: 'auto',
+                right: 'auto',
+                bottom: 'auto',
+                border: 'none',
+                background: 'white',
+                overflow: 'visible',
+                padding: '20px',
+                width: '400px',
+                maxHeight: '80%',
+                boxShadow: '0 0 10px rgba(0, 0, 0, 0.25)',
+              },
+            }}
+        >
+          <h2 className="text-lg font-bold mb-4">Are you sure you want to delete this gallery?</h2>
+          <div className="flex justify-end">
+            <button
+                type="button"
+                onClick={closeConfirmDeleteModal}
+                className="mr-2 inline-flex justify-center rounded-md border border-gray-300 px-4 py-2 bg-white text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Cancel
+            </button>
+            <button
+                type="button"
+                onClick={handleDelete}
+                className="inline-flex justify-center rounded-md border border-transparent px-4 py-2 bg-red-600 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+            >
+              Confirm
+            </button>
+          </div>
         </Modal>
       </div>
   );
