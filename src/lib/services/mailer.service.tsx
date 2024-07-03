@@ -26,7 +26,7 @@ class MailerService {
     });
   }
 
-  async sendEmail(gallery: Gallery) {
+  async sendEmailOnGalleryCreation(gallery: Gallery) {
     const mailOptions = {
       from: `"Luxoria App" <${process.env.SMTP_USER}>`,
       to: gallery.email,
@@ -41,6 +41,39 @@ class MailerService {
         <p>${gallery.description}</p>
         
         <p>You have been invited to visit our Gallery ${gallery.name}</p>
+        <p>Click <a href="${process.env.APP_URL}/galleries/${gallery._id}">here</a> to visit the gallery.</p>
+        
+        <br/>
+        <p>Gallery ID : ${gallery._id}</p>
+        
+        <p>Thank you for using our app.</p>
+        <p>Best regards</p>
+      `
+    };
+
+    try {
+      const info = await this.transporter.sendMail(mailOptions);
+      console.log('Message sent: %s', info.messageId);
+    } catch (error) {
+      console.error('Error sending email: %s', error);
+    }
+  }
+
+  async sendEmailOnFileUpload(gallery: Gallery, fileName: string) {
+    const mailOptions = {
+      from: `"Luxoria App" <${process.env.SMTP_USER}>`,
+      to: gallery.email,
+      subject: `Luxoria - Event on ${gallery.name}`,
+      text: `Dear ${gallery.name},\n\n${gallery.description}`,
+      html: `
+        <h1>Luxoria App.</h1>
+        <h2>Hello,</h2>
+        <p>This is Luxoria app.</p>
+        <br/>
+        <p>An event took place in the gallery: ${gallery.name}</p>
+        <p>Description : ${gallery.description}</p>
+        
+        <p>A new photo has appeared : ${fileName}</p>
         <p>Click <a href="${process.env.APP_URL}/galleries/${gallery._id}">here</a> to visit the gallery.</p>
         
         <br/>
