@@ -8,6 +8,7 @@ import Modal from 'react-modal';
 import ShareButton from "@/components/shareButton";
 import MoveToComponent from "@/components/moveTo";
 import FeedbackButton from "@/components/feedbackButton";
+import LikeButton from "@/components/like";
 
 interface CardComponentProps {
     _id: string;
@@ -59,6 +60,7 @@ export default function CardComponent({ _id, name, galleryName, afterDelete } : 
                 <ShareButton _id={_id} />
                 <MoveToComponent _id={_id} />
                 <FeedbackButton _id={_id} pictureName={name} />
+                <LikeButton _id={_id} />
             </div>
 
             <Modal

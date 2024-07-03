@@ -21,7 +21,8 @@ export async function POST(request: NextRequest) {
         const bucket = new GridFSBucket(db);
         const uploadStream = bucket.openUploadStream(file.name, {
             metadata: {
-                relatedToGallery: relatedToGallery || null
+                relatedToGallery: relatedToGallery || null,
+                isLiked: false
             }
         });
 
