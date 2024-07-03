@@ -50,6 +50,23 @@ export default function TableComponent() {
     await navigator.clipboard.writeText(url);
   };
 
+  const handleDelete = async (gallery: Gallery) => {
+    try {
+      const response = await fetch(`/api/galleries/delete/${gallery._id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete gallery');
+      }
+
+      const data = await response.json();
+      setGalleries(galleries.filter((g) => g._id !== gallery._id));
+    } catch (error) {
+      console.error('Error deleting gallery:', error);
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Submitting form', newGallery);
@@ -133,7 +150,7 @@ export default function TableComponent() {
                         Edit<span className="sr-only">, {gallery.name}</span>
                       </button>
 
-                      <button className="text-red-600 hover:text-red-900">
+                      <button className="text-red-600 hover:text-red-900" onClick={() => handleDelete(gallery)}>
                         Delete<span className="sr-only">, {gallery.name}</span>
                       </button>
                     </td>
