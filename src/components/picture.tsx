@@ -49,7 +49,7 @@ export default function CardComponent({ _id, name, galleryName, afterDelete } : 
                     fill
                     style={{ objectFit: 'contain' }}
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    priority  // Ajout de priority pour les images importantes
+                    priority
                 />
             </div>
 
@@ -58,7 +58,7 @@ export default function CardComponent({ _id, name, galleryName, afterDelete } : 
                 <DeleteButton _id={_id} func={afterDelete} />
                 <ShareButton _id={_id} />
                 <MoveToComponent _id={_id} />
-                <FeedbackButton _id={_id} />
+                <FeedbackButton _id={_id} pictureName={name} />
             </div>
 
             <Modal
@@ -105,7 +105,7 @@ export default function CardComponent({ _id, name, galleryName, afterDelete } : 
                             fill
                             style={{ objectFit: 'contain' }}
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 50vw"
-                            priority  // Ajout de priority pour l'image du modal
+                            priority
                         />
                     </div>
                 </div>
