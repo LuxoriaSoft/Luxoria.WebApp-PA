@@ -7,6 +7,7 @@ import DownloadButton from '@/components/downloadButton';
 import Modal from 'react-modal';
 import ShareButton from "@/components/shareButton";
 import MoveToComponent from "@/components/moveTo";
+import FeedbackButton from "@/components/feedbackButton";
 
 interface CardComponentProps {
     _id: string;
@@ -57,6 +58,7 @@ export default function CardComponent({ _id, name, galleryName, afterDelete } : 
                 <DeleteButton _id={_id} func={afterDelete} />
                 <ShareButton _id={_id} />
                 <MoveToComponent _id={_id} />
+                <FeedbackButton _id={_id} />
             </div>
 
             <Modal

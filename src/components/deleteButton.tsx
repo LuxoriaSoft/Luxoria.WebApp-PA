@@ -60,13 +60,13 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({ _id, func }) => {
                   className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400"
                   onClick={handleCancel}
               >
-                Annuler
+                Cancel
               </button>
               <button
                   className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-500"
                   onClick={handleDelete}
               >
-                Confirmer
+                Delete
               </button>
             </div>
           </div>
