@@ -53,7 +53,7 @@ export default function GridComponent({ galleryId }: GridComponentProps) {
           console.error('Error fetching inventory:', error);
         });
     }
-  }, []);
+  }, [galleryId]);
 
   return (
     <>
