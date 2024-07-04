@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) : Promise<void | Response> {
     await db.collection("galleries").insertOne(body);
 
     // Send email notification
-    await mailer.sendEmail(body);
+    await mailer.sendEmailOnGalleryCreation(body);
 
     return NextResponse.json({ success: "Gallery created successfully!", body  }, { status: 200 });
 

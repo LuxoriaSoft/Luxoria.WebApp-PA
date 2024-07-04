@@ -1,6 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDbInstance } from '@/lib/services/database.service';
 import { ObjectId } from 'mongodb';
+import MailerService from "@/lib/services/mailer.service";
+
+const mailer = new MailerService();
+
+interface Gallery {
+    _id: ObjectId;
+    name: string;
+    description: string;
+    email: string;
+}
 
 export async function POST(request: NextRequest): Promise<void | Response> {
     try {
@@ -31,6 +41,15 @@ export async function POST(request: NextRequest): Promise<void | Response> {
             console.error('No documents were modified');
             throw new Error('Failed to assign gallery');
         }
+
+        const galleriesCollection = db.collection('galleries');
+        const gallery = await galleriesCollection.findOne({ _id: galleryObjectId }) as Gallery;
+
+        if (!gallery) {
+            return NextResponse.json({ error: 'Gallery not found' }, { status: 404 });
+        }
+
+        await mailer.sendEmailOnFileUpload(gallery, imageId);
 
         return NextResponse.json({ success: true });
     } catch (error) {
