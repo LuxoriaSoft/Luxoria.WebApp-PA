@@ -3,7 +3,7 @@ import React from 'react';
 const navigation = [
     {
         name: 'GitHub',
-        href: '#',
+        href: 'https://github.com/Luxoria-EIP',
         icon: (props: React.SVGProps<SVGSVGElement>) => (
             <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
                 <path
@@ -30,7 +30,7 @@ const Layout: React.FC = () => {
                 </div>
                 <div className="mt-8 md:order-1 md:mt-0">
                     <p className="text-center text-xs leading-5 text-gray-500">
-                        &copy; 2024 LuxorIA, Inc. All rights reserved.
+                        &copy; 2024 LuxorIA, All rights reserved.
                     </p>
                 </div>
             </div>
