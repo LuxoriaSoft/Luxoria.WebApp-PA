@@ -1,6 +1,7 @@
 import NavBarComponent from "@/components/navBar";
 import CardComponent from "@/components/picture";
 import GridComponent from "@/components/dashboard/grid";
+import Layout from "@/components/footer";
 
 export default async function Home() {
 
@@ -13,6 +14,7 @@ export default async function Home() {
       <div className="mt-4">
         <h1 className="text-2xl font-bold mb-4">Inventory</h1>
         <GridComponent galleryId={null} />
+          <Layout />
       </div>
     </main>
   );
