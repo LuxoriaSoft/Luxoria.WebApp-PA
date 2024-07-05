@@ -89,17 +89,10 @@ export default function CardComponent({ _id, name, galleryName, afterDelete } : 
                         height: '80%',
                         maxWidth: 'none',
                         maxHeight: 'none',
-                        boxShadow: '0 0 10px rgba(0, 0, 0, 0.25)',
                     },
                 }}
             >
-                <div className="bg-white p-4 rounded-lg w-full h-full">
-                    <button
-                        onClick={closeModal}
-                        className="absolute top-2 right-2 text-white bg-red-600 hover:bg-red-500 rounded-full p-2 z-50"
-                    >
-                        Close
-                    </button>
+                <div className="p-4 rounded-lg w-full h-full">
                     <div className="relative w-full h-full">
                         <Image
                             src={`/api/preview/${_id}`}
