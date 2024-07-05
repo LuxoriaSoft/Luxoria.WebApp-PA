@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import {getDbInstance} from "@/lib/services/database.service";
-import {GridFSBucket} from "mongodb";
+import {GridFSBucket, ObjectId} from "mongodb";
 
 export async function POST(request: NextRequest) {
     try {
@@ -18,10 +18,15 @@ export async function POST(request: NextRequest) {
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
 
+        let relatedToGalleryId = null;
+        if (typeof relatedToGallery === 'string') {
+            relatedToGalleryId = new ObjectId(relatedToGallery);
+        }
+
         const bucket = new GridFSBucket(db);
         const uploadStream = bucket.openUploadStream(file.name, {
             metadata: {
-                relatedToGallery: relatedToGallery || null,
+                relatedToGallery: relatedToGalleryId || null,
                 isLiked: false
             }
         });
